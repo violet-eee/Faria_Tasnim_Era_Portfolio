@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faria Tasnim Era — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#11151c;
+    --surface:#1a2130;
+    --surface-2:#222b3d;
+    --paper:#f1ede4;
+    --paper-dim:#b9b6ac;
+    --amber:#d9a53d;
+    --teal:#4fb3a9;
+    --line: rgba(241,237,228,0.12);
+    --radius: 2px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--amber);color:var(--ink);}
+
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- layout shells ---------- */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  section{padding:120px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;height:1px;
+    background:var(--teal);
+  }
+
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(17,21,28,0.78);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:68px;padding-top:0;padding-bottom:0;
+  }
+  .brand{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:0.05em;color:var(--paper);}
+  .brand span{color:var(--amber);}
+  .navlinks{display:flex;gap:32px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.03em;}
+  .navlinks a{color:var(--paper-dim);transition:color .2s;position:relative;}
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--paper);}
+  .navlinks a:focus-visible{outline:1px solid var(--amber);outline-offset:4px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:140px;
+    padding-bottom:80px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap:48px;
+    align-items:end;
+  }
+  .hero h1{
+    font-size:clamp(48px, 7vw, 92px);
+    line-height:0.98;
+    color:var(--paper);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--amber);
+  }
+  .hero-sub{
+    margin-top:28px;
+    max-width:520px;
+    font-size:18px;
+    color:var(--paper-dim);
+  }
+  .hero-log{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--paper-dim);
+    border-left:1px solid var(--line);
+    padding-left:24px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .hero-log .row{display:flex;justify-content:space-between;gap:12px;}
+  .hero-log .row span:first-child{color:var(--teal);}
+  .hero-cta{
+    margin-top:40px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.03em;
+    padding:13px 22px;
+    border:1px solid var(--paper);
+    border-radius:var(--radius);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn.primary{background:var(--amber);border-color:var(--amber);color:var(--ink);font-weight:500;}
+  .btn.primary:hover{background:transparent;color:var(--amber);}
+  .btn.ghost:hover{background:var(--paper);color:var(--ink);}
+  .btn:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+
+  .scanline{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 3px,
+      rgba(241,237,228,0.012) 3px, rgba(241,237,228,0.012) 4px
+    );
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 0.9fr 1.4fr;
+    gap:64px;
+  }
+  .about-grid p{color:var(--paper-dim);font-size:16px;max-width:54ch;}
+  .about-grid p + p{margin-top:18px;}
+  .stat-list{display:flex;flex-direction:column;gap:22px;}
+  .stat{border-top:1px solid var(--line);padding-top:14px;}
+  .stat .num{font-family:'Fraunces',serif;font-size:34px;color:var(--amber);}
+  .stat .label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--paper-dim);text-transform:uppercase;letter-spacing:0.08em;}
+
+  /* ---------- experience ---------- */
+  .timeline{display:flex;flex-direction:column;}
+  .tl-item{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:32px;
+    padding:28px 0;
+    border-top:1px solid var(--line);
+  }
+  .tl-item:last-child{border-bottom:1px solid var(--line);}
+  .tl-date{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);}
+  .tl-role{font-family:'Fraunces',serif;font-size:22px;color:var(--paper);margin-bottom:6px;}
+  .tl-org{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--paper-dim);margin-bottom:10px;}
+  .tl-desc{color:var(--paper-dim);font-size:15px;max-width:60ch;}
+
+  /* ---------- projects ---------- */
+  .proj-card{
+    display:grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap:0;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .proj-visual{
+    background:
+      linear-gradient(135deg, var(--surface-2), var(--surface)),
+      repeating-linear-gradient(45deg, rgba(217,165,61,0.06) 0 2px, transparent 2px 14px);
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:280px;
+    border-right:1px solid var(--line);
+  }
+  .proj-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .proj-glyph{
+    font-family:'Fraunces',serif;
+    font-size:64px;
+    color:var(--paper);
+    opacity:0.92;
+  }
+  .proj-body{padding:40px;}
+  .proj-body h3{font-size:26px;color:var(--paper);margin-bottom:14px;}
+  .proj-body p{color:var(--paper-dim);font-size:15px;margin-bottom:20px;max-width:50ch;}
+  .proj-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    padding:5px 10px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:var(--paper-dim);
+  }
+  .proj-link{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--teal);
+    border-bottom:1px solid var(--teal);
+    padding-bottom:2px;
+  }
+  .proj-link:hover{color:var(--amber);border-color:var(--amber);}
+
+  /* ---------- skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .skill-cell{
+    background:var(--ink);
+    padding:22px 18px;
+  }
+  .skill-cell .cat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--amber);
+    margin-bottom:12px;
+  }
+  .skill-cell ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .skill-cell li{font-size:14px;color:var(--paper-dim);}
+
+  /* ---------- education ---------- */
+  .edu-item{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:32px;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+  }
+  .edu-item:last-child{border-bottom:1px solid var(--line);}
+  .edu-school{font-family:'Fraunces',serif;font-size:20px;}
+  .edu-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-top:6px;}
+  .edu-detail{color:var(--paper-dim);font-size:14px;}
+
+  /* ---------- languages ---------- */
+  .lang-row{display:flex;gap:40px;flex-wrap:wrap;}
+  .lang-item{min-width:160px;}
+  .lang-name{font-family:'Fraunces',serif;font-size:20px;margin-bottom:10px;}
+  .bar-track{height:4px;background:var(--surface-2);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+  .bar-fill{height:100%;background:var(--teal);}
+  .bar-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--paper-dim);}
+
+  /* ---------- contact / footer ---------- */
+  .contact-inner{text-align:left;}
+  .contact h2{font-size:clamp(36px,6vw,64px);max-width:14ch;margin-bottom:24px;}
+  .contact-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px;}
+  footer{padding:32px 0;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--paper-dim);flex-wrap:wrap;gap:12px;}
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-log{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:20px;}
+    .about-grid{grid-template-columns:1fr;}
+    .tl-item{grid-template-columns:1fr;gap:8px;}
+    .proj-card{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+    .edu-item{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">FARIA<span>.</span>ERA</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="scanline"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">CSE Student · East West University</div>
+      <h1>Faria Tasnim<br><em>Era.</em></h1>
+      <p class="hero-sub">I build things at the intersection of code, security, and design — from cybersecurity fundamentals to interfaces people actually enjoy using.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#projects">View projects →</a>
+        <a class="btn ghost" href="mailto:era3972@gmail.com">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-log mono">
+      <div class="row"><span>location</span><span>Dhaka, Bangladesh</span></div>
+      <div class="row"><span>focus</span><span>CSE · Cybersecurity · UI</span></div>
+      <div class="row"><span>cgpa</span><span>3.52 / 4.00</span></div>
+      <div class="row"><span>github</span><span>github.com/violet-eee</span></div>
+      <div class="row"><span>status</span><span>Open to opportunities</span></div>
+      <div class="row"><span>languages</span><span>BN · EN · JP (basic)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="stat-list">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="label">Teaching &amp; consulting roles</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="label">Scholarships earned</div>
+      </div>
+      <div class="stat">
+        <div class="num">5.00</div>
+        <div class="label">SSC &amp; HSC GPA</div>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">About</div>
+      <h2 style="font-size:32px;margin-bottom:20px;">Motivated by problems worth solving.</h2>
+      <p>I'm a Computer Science and Engineering student at East West University with a solid foundation in programming, data structures, and algorithms — and a growing focus on cybersecurity fundamentals across web, network, and forensics.</p>
+      <p>Outside coursework, I teach mathematics and tutor students one-on-one, work as a sub-executive with my university's Cyber Security Club organizing workshops and CTFs, and design interfaces in Figma as a way to keep learning beyond the syllabus.</p>
+      <p>I'm currently receiving the Medha Lalon Scholarship for academic standing within my department, and I'm always looking for the next thing to take apart and understand.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">Experience</div>
+    <h2 style="font-size:32px;margin-bottom:36px;">Where I've worked.</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Jan 2025 — Present</div>
+        <div>
+          <div class="tl-role">Assistant Teacher of Mathematics</div>
+          <div class="tl-org">SOFS</div>
+          <div class="tl-desc">Assist in teaching math lessons and supporting students; help prepare materials and evaluate assignments.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Sep 2024 — Jan 2025</div>
+        <div>
+          <div class="tl-role">Telemarketer &amp; Consultant</div>
+          <div class="tl-org">Markapture</div>
+          <div class="tl-desc">Researched market trends and targeted specific audiences; advised clients on educational strategies suited to their goals.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2021 — Present</div>
+        <div>
+          <div class="tl-role">Private Tutor</div>
+          <div class="tl-org">Self-employed</div>
+          <div class="tl-desc">Provide personalized academic support, enhancing student performance and achieving individualized learning goals.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">Projects</div>
+    <h2 style="font-size:32px;margin-bottom:36px;">Things I've built.</h2>
+
+    <div class="proj-card">
+      <div class="proj-visual">
+        <span class="proj-tag">UI / UX · Figma</span>
+        <span class="proj-glyph">🐾</span>
+      </div>
+      <div class="proj-body">
+        <h3>Friskay Cat Food Shop</h3>
+        <p>A self-learning project designing a complete product landing page UI in Figma, focused on clean visual hierarchy and an inviting, brand-consistent shopping experience.</p>
+        <div class="proj-meta">
+          <span class="chip">Figma</span>
+          <span class="chip">UI Design</span>
+          <span class="chip">Self-directed</span>
+        </div>
+        <a class="proj-link" href="https://www.figma.com/proto/l5jVnXBPR8zw4ewE93ashO/2024-UI-UX-Design-Crash-Course-Project--Community-?node-id=304-122&scaling=contain&content-scaling=fixed&t=JoghtTYWgUAq51HP-1" target="_blank" rel="noopener">View prototype on Figma →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">Skills</div>
+    <h2 style="font-size:32px;margin-bottom:36px;">What I work with.</h2>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="cat">Languages</div>
+        <ul><li>C</li><li>C++</li><li>Python</li><li>Java</li></ul>
+      </div>
+      <div class="skill-cell">
+        <div class="cat">Data &amp; Database</div>
+        <ul><li>SQL</li><li>Data Analysis</li><li>Algorithms &amp; DS</li></ul>
+      </div>
+      <div class="skill-cell">
+        <div class="cat">Security</div>
+        <ul><li>Web fundamentals</li><li>Network fundamentals</li><li>Digital forensics</li></ul>
+      </div>
+      <div class="skill-cell">
+        <div class="cat">Design &amp; Tools</div>
+        <ul><li>Figma</li><li>Microsoft Office</li><li>Communication &amp; leadership</li></ul>
+      </div>
+    </div>
+
+    <div style="margin-top:56px;">
+      <div class="eyebrow">Languages spoken</div>
+      <div class="lang-row">
+        <div class="lang-item">
+          <div class="lang-name">Bengali</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="bar-label">Excellent — all skills</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">English</div>
+          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+          <div class="bar-label">Excellent reading/writing, good spoken</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">Japanese</div>
+          <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+          <div class="bar-label">Basic — currently learning</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow">Education</div>
+    <h2 style="font-size:32px;margin-bottom:36px;">Academic background.</h2>
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">East West University</div>
+        <div class="edu-meta">2023 — Present</div>
+      </div>
+      <div class="edu-detail">Bachelor of Computer Science and Engineering · CGPA 3.52. Recipient of a merit scholarship (Feb–Oct 2023) and the ongoing Medha Lalon Scholarship for academic excellence within the department.</div>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">Sabujbagh Govt. College, Dhaka</div>
+        <div class="edu-meta">2021</div>
+      </div>
+      <div class="edu-detail">Higher Secondary Certificate (HSC), Science Group · GPA 5.00</div>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">Motijheel Govt. Girls' High School, Dhaka</div>
+        <div class="edu-meta">2019</div>
+      </div>
+      <div class="edu-detail">Secondary School Certificate (SSC), Science Group · GPA 5.00</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact contact-inner">
+    <div class="eyebrow">Contact</div>
+    <h2>Let's build something worth shipping.</h2>
+    <p style="color:var(--paper-dim);max-width:46ch;">Open to internships, collaborations, and conversations about security, software, or design — whichever door you'd like to start with.</p>
+    <div class="contact-links">
+      <a class="btn primary" href="mailto:era3972@gmail.com">era3972@gmail.com</a>
+      <a class="btn ghost" href="https://linkedin.com/in/era-tasnim-10b727252" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn ghost" href="https://github.com/violet-eee" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Faria Tasnim Era</span>
+    <span>Built with care, one section at a time.</span>
+  </div>
+</footer>
+
+</body>
+</html>
